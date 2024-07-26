@@ -28,6 +28,7 @@ export const Demo: React.FC<CropComponentProps> = ({ imageSrc, onCancel, onConfi
                     ref={cropperRef}
                     style={{ height: 400, width: "100%" }}
                     initialAspectRatio={1}
+                    aspectRatio={1}  
                     src={imageSrc}
                     viewMode={1}
                     minCropBoxHeight={10}
