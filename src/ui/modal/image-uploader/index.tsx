@@ -7,7 +7,7 @@ import FileViewer from './file-viewer';
 import { axiosInstance as axios, useAxiosLoader } from '../../../axiosInstacne';
 import Crop from './crop';
 import { useProfile } from '../../../context/profileContext';
-import { addtoFileState, addUploadStatus, removeUploadStatus, uploadFile, urlToFile } from '../../../utils';
+import { addtoFileState, addUploadStatus, removeUploadStatus, selectImageSave, uploadFile, urlToFile } from '../../../utils';
 import { FileResource } from './types';
 interface ImageUploaderProps {
     maxFiles?: number;
@@ -22,8 +22,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = memo(({ maxFiles = 5, maxSiz
 
     const [files, setFiles] = useState<FileList | null>(null);
 
-    // const [loading, setLoading] = useState(false);
-
     const loading = useAxiosLoader()
 
     const toUrl = (index: number) => URL.createObjectURL([...(files as FileList)][index]);
@@ -34,8 +32,13 @@ const ImageUploader: React.FC<ImageUploaderProps> = memo(({ maxFiles = 5, maxSiz
     const { setProfile } = useProfile();
 
     const handleOnSelect = (index: number) => {
-        setProfile(toUrl(index));
-        closeModal();
+        if(files?.length) {
+            const file = [...(files as FileList)][index];
+            selectImageSave(file).then(() =>{
+                setProfile(toUrl(index));
+                closeModal();
+            })
+        }
     }
 
     const handleUpload = (fileList: FileList) => {
@@ -61,13 +64,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = memo(({ maxFiles = 5, maxSiz
             }))
         })
     }, []);
-
-    // useEffect(() => {
-    //     const newUploadStatus = { ...uploadStatus };
-    //     files && [...files].forEach(file => {
-    //         newUploadStatus[file.name] = newUploadStatus[file.name] || 0;
-    //     });
-    // }, [files]);
 
     useEffect(() => {
         if (files && files.length > maxFiles) {

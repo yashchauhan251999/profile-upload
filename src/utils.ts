@@ -30,6 +30,19 @@ export const uploadFile = (file: File) => {
     }));
 };
 
+export const selectImageSave = (file: File) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    return axios.post('/selected-image', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    });
+};
+
+
+
 export const addUploadStatus = (file: File, setUploadStatus: React.Dispatch<React.SetStateAction<File[]>>) => {
     setUploadStatus(old => [...old, file]);
 }

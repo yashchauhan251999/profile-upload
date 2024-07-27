@@ -33,7 +33,7 @@ const FileList: React.FC<FileListProps> = ({ files, onCrop, onDelete, onSelect, 
 
     return (
         <div className="w-full">
-            <ul className="divide-y divide-gray-200 overflow-y-auto max-h-[26rem]">
+            <ul className="divide-y divide-gray-200 overflow-y-auto max-h-[12rem]">
                 {files && Array.from(files).map((file, index) => (
                     <li key={file.name} className="p-4 flex items-center text-gray-600">
                         <img

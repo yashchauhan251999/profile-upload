@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import avatar from '../assets/avatar.png';
+// import avatar from '../assets/avatar.png';
 
 interface ProfileContextType {
     profile: string;
@@ -9,6 +9,7 @@ interface ProfileContextType {
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export const ProfileProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+    const avatar = `${import.meta.env.VITE_image_service}/selected-image`; 
     const [profile, setProfile] = useState(avatar);
 
     return (
